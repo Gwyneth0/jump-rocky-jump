@@ -5,10 +5,6 @@ const { ccclass, property } = _decorator;
 
 @ccclass("Revive")
 export class Revive extends Component {
-    /* class member could be defined like this */
-    // dummy = '';
-
-    /* use `property` decorator if your want the member to be serializable */
 
     closeCb: Function = null;
 
@@ -25,7 +21,7 @@ export class Revive extends Component {
     progressLabel: Label = null;
 
     @property(SpriteComponent)
-    spCountDown: SpriteComponent = null;  //倒计时
+    spCountDown: SpriteComponent = null; 
 
     pageResult: PageResult = null;
     countDownTime: number;
@@ -45,7 +41,6 @@ export class Revive extends Component {
 
         this.historyLabel.string = Constants.MAX_SCORE.toString();
 
-        // this.closeCb = closeCallback;
         this.countDownTime = 5;
         this.progressLabel.string = this.countDownTime + '';
         this.currentTime = 0;
@@ -59,15 +54,12 @@ export class Revive extends Component {
 
         Constants.game.node.emit(Constants.GAME_EVENT.REVIVE);
         this.pageResult.showResult(false);
-        // uiManager.instance.hideDialog('fight/revive');
     }
 
     onBtnSkipClick() {
         Constants.game.audioManager.playClip();
         this.isCountDowning = false;
-        // uiManager.instance.hideDialog('fight/revive');
 
-        // this.closeCb && this.closeCb();
         Constants.game.gameOver();
     }
 
@@ -82,13 +74,11 @@ export class Revive extends Component {
         this.progressLabel.string = Math.ceil(spare) + '';
         if (spare <= 0) {
             spare = 0;
-
-            //触发倒计时结束
             this.isCountDowning = false;
             this.onBtnSkipClick();
         }
 
-        let percent = spare / this.countDownTime; // 展示百分比
+        let percent = spare / this.countDownTime;
         this.spCountDown.fillRange = percent;
 
 

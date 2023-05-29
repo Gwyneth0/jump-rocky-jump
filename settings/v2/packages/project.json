@@ -9,5 +9,10 @@
       "name": "canvas_19",
       "value": 524288
     }
-  ]
+  ],
+  "general": {
+    "designResolution": {
+      "height": 960
+    }
+  }
 }

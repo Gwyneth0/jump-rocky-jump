@@ -10,10 +10,6 @@ export class UpdateValueLabel extends Label {
     currTime = 0;
     changingTime = 0;
 
-    start() {
-        // Your initialization goes here.
-    }
-
     playUpdateValue(startVal: number, endVal: number, changingTime: number) {
         this.startVal = startVal;
         this.endVal = endVal;

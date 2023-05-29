@@ -68,9 +68,6 @@ export class Board extends Component {
         }
         this.effectDrop();
         this.effectMove();
-        if (this.hasDiamond) {
-            this.effectDiamondRotate();
-        }
     }
 
     reset(type: number, pos: Vec3, level: number) {
@@ -79,7 +76,6 @@ export class Board extends Component {
         this.node.setPosition(pos);
         this.isMoving = false;
         this.currDropFrame = Constants.BOARD_DROP_FRAMES;
-        // 按概率来决定是否是移动板
         if (this.type === Constants.BOARD_TYPE.NORMAL || this.type === Constants.BOARD_TYPE.DROP || this.type === Constants.BOARD_TYPE.SPRING) {
             this.isMoving = this.setMove(level);
         }
@@ -180,7 +176,6 @@ export class Board extends Component {
                 if (this.diamondList[i].active) {
                     flag = false;
                     if (Math.abs(x - this.diamondList[i].position.x) <= Constants.DIAMOND_SCORE_AREA) {
-                        Constants.game.ball.playDiamondParticle(this.diamondList[i].position);
                         this.hideDiamond(i);
                         Constants.game.addScore(Constants.DIAMOND_SCORE);
                     }
@@ -191,15 +186,6 @@ export class Board extends Component {
             }
         }
     }
-
-    // 钻石旋转
-    effectDiamondRotate() {
-        for (let i = 0; i < 5; i++) {
-            const eulerAngles = this.diamondList[i].eulerAngles;
-            this.diamondList[i].eulerAngles = new Vec3(eulerAngles.x, eulerAngles.y + Constants.DIAMOND_ROTATE_STEP_Y, eulerAngles.z);
-        }
-    }
-
     initSpring() {
         this.springHelix = instantiate(this.springHelixPrefab);
         this.springHelixOriginScale = this.springHelix.getScale();
@@ -297,7 +283,6 @@ export class Board extends Component {
             this.wave.setScale(this.waveOriginScale.clone());
             this.wave.active = true;
             const mat2 = this.wave.getComponent(MeshRenderer)!.material;
-            // 初始化时保存以下变量
             const pass = mat2!.passes[0];
             const hColor = pass.getHandle('color');
             const color = new Color('#dadada');
@@ -316,7 +301,6 @@ export class Board extends Component {
                 }
 
                 const mat2 = this.waveInner.getComponent(MeshRenderer)!.material;
-                // 初始化时保存以下变量
                 const pass = mat2!.passes[0];
                 const hColor = pass.getHandle('color');
                 const color = new Color('#dadada');
@@ -328,7 +312,6 @@ export class Board extends Component {
             }
 
             const mat2 = this.wave.getComponent(MeshRenderer)!.material;
-            // 初始化时保存以下变量
             const pass = mat2!.passes[0];
             const hColor = pass.getHandle('color');
             const color = new Color('#dadada');

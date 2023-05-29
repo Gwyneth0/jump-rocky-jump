@@ -1,8 +1,4 @@
 
-/**
- * Copyright (c) 2019 Xiamen Yaji Software Co.Ltd. All rights reserved.
- * Created by daisy on 2019/06/25.
- */
 import { _decorator, Component, Node, instantiate, Prefab } from "cc";
 import { Constants } from "../data/constants";
 import { Ball } from "./ball";
@@ -12,9 +8,6 @@ import { UIManager } from "./ui-manager";
 import { AudioManager } from "./audio-manager";
 const { ccclass, property } = _decorator;
 
-/**
- * @zh 游戏管理类，同时也是事件监听核心对象。
- */
 @ccclass("Game")
 export class Game extends Component {
     @property(Prefab)

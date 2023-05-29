@@ -1,7 +1,3 @@
-/**
- * Copyright (c) 2019 Xiamen Yaji Software Co.Ltd. All rights reserved.
- * Created by daisy on 2019/06/25.
- */
 import { _decorator, Component, Node } from "cc";
 import { Constants } from "../data/constants";
 const { ccclass, property } = _decorator;
