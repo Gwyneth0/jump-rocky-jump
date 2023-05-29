@@ -12,26 +12,32 @@ export class Ball extends Component {
 
     @property(Prefab)
     @property({ type: Prefab })
-    scoreAniPrefab: Prefab = null!;
+    private scoreAniPrefab: Prefab = null!;
     @property({ type: Prefab })
-    trail02Prefab: Prefab = null!;
-    currBoard: Board = null!;
-    boardCount = 0;
-    jumpState = Constants.BALL_JUMP_STATE.JUMPUP;
-    currBoardIdx = 0;
-    diffLevel = 1;
-    currJumpFrame = 0; 
-    hasSprint = false;
-    isTouch = false;
-    touchPosX = 0; 
-    movePosX = 0; 
-    isJumpSpring = false;
-    boardGroupCount = 0;
-    trailNode: Node | null = null;
-    timeScale = 0;
-    _wPos = new Vec3();
+    private trail02Prefab: Prefab = null!;
+    private _currBoard: Board = null!;
+    public get currBoard(): Board {
+        return this._currBoard;
+    }
+    public set currBoard(value: Board) {
+        this._currBoard = value;
+    }
+    private boardCount = 0;
+    private jumpState = Constants.BALL_JUMP_STATE.JUMPUP;
+    private currBoardIdx = 0;
+    private diffLevel = 1;
+    private currJumpFrame = 0; 
+    private hasSprint = false;
+    private isTouch = false;
+    private touchPosX = 0; 
+    private movePosX = 0; 
+    private isJumpSpring = false;
+    private boardGroupCount = 0;
+    private trailNode: Node | null = null;
+    private timeScale = 0;
+    private _wPos = new Vec3();
 
-    start () {
+    protected start (): void {
         Constants.game.node.on(Node.EventType.TOUCH_START, this.onTouchStart, this);
         Constants.game.node.on(Node.EventType.TOUCH_END, this.onTouchEnd, this);
         Constants.game.node.on(Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
@@ -40,14 +46,14 @@ export class Ball extends Component {
         this.reset();
     }
 
-    onDestroy() {
+    protected onDestroy(): void {
         Constants.game.node.off(Node.EventType.TOUCH_START, this.onTouchStart, this);
         Constants.game.node.off(Node.EventType.TOUCH_END, this.onTouchEnd, this);
         Constants.game.node.off(Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
         Constants.game.node.off(Constants.GAME_EVENT.RESTART, this.gameStart, this);
     }
 
-    update(deltaTime: number) {
+    protected update(deltaTime: number): void {
         this.timeScale = Math.floor((deltaTime / Constants.normalDt) * 100) / 100;
         if (Constants.game.state === Constants.GAME_STATE.PLAYING) {
             const boardBox = Constants.game.boardManager;
@@ -112,22 +118,22 @@ export class Ball extends Component {
         }
     }
 
-    onTouchStart(touch: Touch, event: EventTouch){
+    protected onTouchStart(touch: Touch, event: EventTouch): void{
         this.isTouch = true;
         this.touchPosX = touch.getLocation().x;
         this.movePosX = this.touchPosX;
     }
 
-    onTouchMove(touch: Touch, event: EventTouch){
+    protected onTouchMove(touch: Touch, event: EventTouch): void{
         this.movePosX = touch.getLocation().x;
     }
-    onTouchEnd(touch: Touch, event: EventTouch){
+    protected onTouchEnd(touch: Touch, event: EventTouch): void{
         this.isTouch = false;
     }
-    gameStart(){
+    protected gameStart(): void{
         this.playTrail();
     }
-    reset() {
+    protected reset(): void {
         this.boardCount = 0;
         this.diffLevel = 1;
         _tempPos.set(Constants.BOARD_INIT_POS);
@@ -141,16 +147,16 @@ export class Ball extends Component {
         this.show();
         this.setTrailPos();
     }
-    updateBall() {
+    protected updateBall(): void {
         this.trailNode = PoolManager.instance.getNode(this.trail02Prefab, this.node.parent);
     }
-    show() {
+    protected show(): void {
         this.node.active = true;
     }
-    hide() {
+    protected hide(): void {
         this.node.active = false;
     }
-    activeCurrBoard() {
+    protected activeCurrBoard():void {
         const pos = this.node.position;
         const boardPos = this.currBoard.node.position;
         const boardType = this.currBoard.type;
@@ -199,7 +205,7 @@ export class Ball extends Component {
         Constants.game.cameraCtrl.preType = boardType;
     }
 
-    newBoard() {
+    protected newBoard(): void {
         let type = Constants.BOARD_TYPE.NORMAL;
         if (this.boardGroupCount <= 0) {
             const coeff = utils.getDiffCoeff(this.diffLevel, 1, 10);
@@ -215,7 +221,7 @@ export class Ball extends Component {
         Constants.game.boardManager.newBoard(type, this.diffLevel);
     }
 
-    showScore(score: number) {
+    protected showScore(score: number): void {
         const node = PoolManager.instance.getNode(this.scoreAniPrefab, find('Canvas/resultUI')!);
         const pos = new Vec3();
         const cameraComp = Constants.game.cameraCtrl.node.getComponent(Camera)!;
@@ -232,7 +238,7 @@ export class Ball extends Component {
         animationComponent.play();
     }
 
-    setPosX() {
+    protected setPosX(): void {
         if (this.isTouch && this.touchPosX !== this.movePosX) {
             _tempPos.set(this.node.position);
             if (this.jumpState === Constants.BALL_JUMP_STATE.SPRINT) {
@@ -254,7 +260,7 @@ export class Ball extends Component {
         }
     }
 
-    setPosY() {
+    protected setPosY(): void {
         _tempPos.set(this.node.position);
         if (this.jumpState === Constants.BALL_JUMP_STATE.JUMPUP) {
             if (this.isJumpSpring) {
@@ -284,7 +290,7 @@ export class Ball extends Component {
 
         }
     }
-    isOnBoard(board: Board) {
+    public isOnBoard(board: Board) {
         const pos = this.node.position;
         const boardPos = board.node.position;
         const x = Math.abs(pos.x - boardPos.x);

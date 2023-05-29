@@ -35,7 +35,7 @@ export class Game extends Component {
     __preload () {
         Constants.game = this;
     }
-
+////
     onLoad(){
         if (!this.ballPref) {
             console.log('There is no ball!!');

@@ -4,27 +4,25 @@ const { ccclass, property } = _decorator;
 @ccclass("AudioManager")
 export class AudioManager extends Component{
     @property(AudioClip)
-    bg: AudioClip = null!;
+    private bg: AudioClip = null!;
     @property(AudioClip)
-    click: AudioClip = null!;
+    private click: AudioClip = null!;
+    private audioComp: AudioSource = null!;
 
-    audioComp: AudioSource = null!;
-
-    start() {
+    protected start(): void {
         this.audioComp = this.getComponent(AudioSource)!;
     }
 
-    playSound(play = true) {
+    public playSound(play = true): void {
         if(!play){
             this.audioComp.stop();
             return;
         }
-
         this.audioComp.clip = this.bg;
         this.audioComp.play();
     }
 
-    playClip() {
+    protected playClip(): void {
         this.audioComp.playOneShot(this.click);
     }
 
