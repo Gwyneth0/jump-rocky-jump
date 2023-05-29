@@ -8,13 +8,13 @@
       "__id__": 1
     },
     "optimizationPolicy": 0,
-    "asyncLoadAssets": false,
     "persistent": false
   },
   {
     "__type__": "cc.Node",
     "_name": "board",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "_parent": null,
     "_children": [
       {
@@ -24,11 +24,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 8
+        "__id__": 9
       }
     ],
     "_prefab": {
-      "__id__": 10
+      "__id__": 11
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -49,6 +49,7 @@
       "y": 1,
       "z": 1
     },
+    "_mobility": 0,
     "_layer": 1073741824,
     "_euler": {
       "__type__": "cc.Vec3",
@@ -73,7 +74,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 7
+      "__id__": 8
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -94,6 +95,7 @@
       "y": 1,
       "z": 1
     },
+    "_mobility": 0,
     "_layer": 1073741824,
     "_euler": {
       "__type__": "cc.Vec3",
@@ -118,7 +120,7 @@
       }
     ],
     "_prefab": {
-      "__id__": 6
+      "__id__": 7
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -139,6 +141,7 @@
       "y": 1.9136004447937,
       "z": 1.9136004447937
     },
+    "_mobility": 0,
     "_layer": 1073741824,
     "_euler": {
       "__type__": "cc.Vec3",
@@ -156,36 +159,55 @@
       "__id__": 3
     },
     "_enabled": true,
+    "__prefab": {
+      "__id__": 5
+    },
     "_materials": [
       {
-        "__uuid__": "d45700de-9eb0-4385-b448-ee83d6129543"
+        "__uuid__": "d45700de-9eb0-4385-b448-ee83d6129543",
+        "__expectedType__": "cc.Material"
       }
     ],
     "_visFlags": 0,
-    "_enableDynamicBatching": false,
+    "bakeSettings": {
+      "__id__": 6
+    },
     "_mesh": {
-      "__uuid__": "85ad4e21-18e6-4ac3-bafe-970a060786be@c6160"
+      "__uuid__": "85ad4e21-18e6-4ac3-bafe-970a060786be@c6160",
+      "__expectedType__": "cc.Mesh"
     },
     "_shadowCastingMode": 0,
-    "_receiveShadows": false,
-    "_id": "",
-    "__prefab": {
-      "__id__": 5
-    }
+    "_shadowReceivingMode": 1,
+    "_shadowBias": 0,
+    "_shadowNormalBias": 0,
+    "_reflectionProbeId": -1,
+    "_enableMorph": true,
+    "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "4dIgc0nVpDfK+Bo249gnGV"
   },
   {
-    "__type__": "cc.PrefabInfo",
-    "root": {
-      "__id__": 1
+    "__type__": "cc.ModelBakeSettings",
+    "texture": null,
+    "uvParam": {
+      "__type__": "cc.Vec4",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
     },
-    "asset": {
-      "__id__": 0
-    },
-    "fileId": "Node.810"
+    "_bakeable": false,
+    "_castShadow": false,
+    "_receiveShadow": false,
+    "_recieveShadow": false,
+    "_lightmapSize": 64,
+    "_useLightProbe": false,
+    "_bakeToLightProbe": true,
+    "_reflectionProbeType": 0,
+    "_bakeToReflectionProbe": true,
+    "_probeCubemap": null
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -195,7 +217,23 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "Node.809"
+    "fileId": "Node.810",
+    "instance": null,
+    "targetOverrides": null,
+    "nestedPrefabInstanceRoots": null
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__id__": 0
+    },
+    "fileId": "Node.809",
+    "instance": null,
+    "targetOverrides": null,
+    "nestedPrefabInstanceRoots": null
   },
   {
     "__type__": "bb50aLcTl1FbpB7Hy0H/DT9",
@@ -205,25 +243,26 @@
       "__id__": 1
     },
     "_enabled": true,
-    "diamondPrefab": {
-      "__uuid__": "b6748d39-c104-499d-a5ae-0cd66aa73ea7"
+    "__prefab": {
+      "__id__": 10
     },
     "centerPrefab": {
-      "__uuid__": "267f7205-58c7-475a-82b3-c1f3b8ccf44d"
+      "__uuid__": "267f7205-58c7-475a-82b3-c1f3b8ccf44d",
+      "__expectedType__": "cc.Prefab"
     },
     "wavePrefab": {
-      "__uuid__": "5541ce13-119d-46e4-93df-7a2da2fe3c88"
+      "__uuid__": "5541ce13-119d-46e4-93df-7a2da2fe3c88",
+      "__expectedType__": "cc.Prefab"
     },
     "springTopPrefab": {
-      "__uuid__": "f1aeb172-157e-481b-9fb1-1e2fd5fbcd2f"
+      "__uuid__": "f1aeb172-157e-481b-9fb1-1e2fd5fbcd2f",
+      "__expectedType__": "cc.Prefab"
     },
     "springHelixPrefab": {
-      "__uuid__": "89e7ed42-2941-4d5e-9f16-bb0e23353f98"
+      "__uuid__": "89e7ed42-2941-4d5e-9f16-bb0e23353f98",
+      "__expectedType__": "cc.Prefab"
     },
-    "_id": "",
-    "__prefab": {
-      "__id__": 9
-    }
+    "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -237,6 +276,8 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "Node.808"
+    "fileId": "Node.808",
+    "instance": null,
+    "targetOverrides": null
   }
 ]
