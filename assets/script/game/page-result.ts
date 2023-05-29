@@ -7,19 +7,16 @@ const { ccclass, property } = _decorator;
 @ccclass("PageResult")
 export class PageResult extends Component {
     @property({ type: UpdateValueLabel })
-    scoreLabel: UpdateValueLabel = null!;
-    targetProgress: number = 0;
-
+    private scoreLabel: UpdateValueLabel = null!;
+    private targetProgress: number = 0;
     @property(Node)
-    nodeTips1: Node = null!;
-
+    private nodeTips1: Node = null!;
     @property(Node)
-    nodeTips2: Node = null!;
-
+    private nodeTips2: Node = null!;
     @property(Node)
-    result: Node = null!;
+    private result: Node = null!;
 
-    init() {
+    protected init(): void {
         this.targetProgress = 0;
         this.scoreLabel.playUpdateValue(this.targetProgress, this.targetProgress, 0);
         this.scoreLabel.isPlaying = false;

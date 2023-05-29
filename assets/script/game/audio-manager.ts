@@ -22,7 +22,7 @@ export class AudioManager extends Component{
         this.audioComp.play();
     }
 
-    protected playClip(): void {
+    public playClip(): void {
         this.audioComp.playOneShot(this.click);
     }
 

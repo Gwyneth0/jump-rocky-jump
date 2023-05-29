@@ -3,23 +3,21 @@ import { Board } from "./board";
 import { Constants } from "../data/constants";
 import { utils } from "../utils/utils";
 const { ccclass, property } = _decorator;
-
 const _tempPos = new Vec3();
-const _diamondPos = new Vec3();
 
 @ccclass("BoardManager")
 export class BoardManager extends Component {
     @property(Prefab)
-    boardPrefab: Prefab = null!;
+    private boardPrefab: Prefab = null!;
 
-    _boardList: Board[] = []; 
-    _boardInsIdx = 0; 
+    private _boardList: Board[] = [];
+    private _boardInsIdx = 0;
 
-    start () {
+    protected start(): void {
         this.initBoard();
     }
 
-    reset(){
+    public reset(): void {
         this._boardInsIdx = 0;
         Constants.game.initFirstBoard = false;
         let pos = Constants.BOARD_INIT_POS.clone();
@@ -36,7 +34,7 @@ export class BoardManager extends Component {
         Constants.game.ball.currBoard = board;
     }
 
-    initBoard() {
+    protected initBoard(): void {
         for (let i = 0; i < Constants.BOARD_NUM; i++) {
             const node = instantiate(this.boardPrefab) as Node;
             node.name = this._boardInsIdx.toString();
@@ -48,7 +46,7 @@ export class BoardManager extends Component {
         this.reset();
     }
 
-    newBoard(newType: number, diffLevel: number) {
+    public newBoard(newType: number, diffLevel: number): void {
         const oldBoard = this._boardList[Constants.BOARD_NUM - 1];
         const pos = this.getNextPos(oldBoard, diffLevel, _tempPos);
         const board = this._boardList.shift()!;
@@ -57,13 +55,12 @@ export class BoardManager extends Component {
         } else {
             board.reset(newType, pos, diffLevel);
         }
-
         board.name = this._boardInsIdx.toString();
         this._boardInsIdx++;
         this._boardList.push(board);
     }
 
-    getNextPos(board: Board, count: number, out?: Vec3) {
+    public getNextPos(board: Board, count: number, out?: Vec3) {
         const pos: Vec3 = out ? out.set(board.node.position) : board.node.position.clone();
         const o = utils.getDiffCoeff(count, 1, 2);
         pos.x = (Math.random() - .5) * Constants.SCENE_MAX_OFFSET_X * o;
@@ -71,7 +68,6 @@ export class BoardManager extends Component {
             pos.y += Constants.BOARD_GAP_SPRINT;
             pos.x = board.node.position.x;
         }
-
         if (board.type === Constants.BOARD_TYPE.SPRING) {
             pos.y += Constants.BOARD_GAP_SPRING;
         } else {
@@ -79,7 +75,7 @@ export class BoardManager extends Component {
         }
         return pos;
     }
-    getBoardList() {
+    public getBoardList() {
         return this._boardList;
     }
 

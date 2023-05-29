@@ -9,56 +9,111 @@ const _tempPos = new Vec3();
 @ccclass("Board")
 export class Board extends Component {
 
-    @property(Prefab)
-    diamondPrefab: Prefab = null!;
+    @property({ type: Prefab })
+    private centerPrefab: Prefab = null!;
 
     @property({ type: Prefab })
-    centerPrefab: Prefab = null!;
+    private wavePrefab: Prefab = null!;
 
     @property({ type: Prefab })
-    wavePrefab: Prefab = null!;
+    private springTopPrefab: Prefab = null!;
 
     @property({ type: Prefab })
-    springTopPrefab: Prefab = null!;
+    private springHelixPrefab: Prefab = null!;
 
-    @property({ type: Prefab })
-    springHelixPrefab: Prefab = null!;
+    private _isActive = false;
+    public get isActive() {
+        return this._isActive;
+    }
+    public set isActive(value) {
+        this._isActive = value;
+    }
+    private _type = Constants.BOARD_TYPE.NORMAL;
+    public get type() {
+        return this._type;
+    }
+    public set type(value) {
+        this._type = value;
+    }
+    private wave: Node = null!;
+    private waveInner: Node = null!;
+    private waveOriginScale = new Vec3();
+    private _currWaveFrame = 0;
+    public get currWaveFrame() {
+        return this._currWaveFrame;
+    }
+    public set currWaveFrame(value) {
+        this._currWaveFrame = value;
+    }
+    private _currSpringFrame = 0;
+    public get currSpringFrame() {
+        return this._currSpringFrame;
+    }
+    public set currSpringFrame(value) {
+        this._currSpringFrame = value;
+    }
+    private _currBumpFrame = Constants.BOARD_BUMP_FRAMES;
+    public get currBumpFrame() {
+        return this._currBumpFrame;
+    }
+    public set currBumpFrame(value) {
+        this._currBumpFrame = value;
+    }
+    private springTop: Node = null!;
+    private springHelix: Node = null!;
+    private _springHelixOriginScale = new Vec3();
+    public get springHelixOriginScale() {
+        return this._springHelixOriginScale;
+    }
+    public set springHelixOriginScale(value) {
+        this._springHelixOriginScale = value;
+    }
+    private center: Node = null!;
+    private _isMovingRight = true;
+    public get isMovingRight() {
+        return this._isMovingRight;
+    }
+    public set isMovingRight(value) {
+        this._isMovingRight = value;
+    }
+    private _isMoving = false;
+    public get isMoving() {
+        return this._isMoving;
+    }
+    public set isMoving(value) {
+        this._isMoving = value;
+    }
+    private posBeforeDrop = new Vec3();
+    private originScale = new Vec3();
+    private _currDropFrame = Constants.BOARD_DROP_FRAMES;
+    public get currDropFrame() {
+        return this._currDropFrame;
+    }
+    public set currDropFrame(value) {
+        this._currDropFrame = value;
+    }
 
-    isActive = false;
-    diamondList: Node[] = [];
-    type = Constants.BOARD_TYPE.NORMAL;
-    wave: Node = null!;
-    waveInner: Node = null!;
-    waveOriginScale = new Vec3();
-    currWaveFrame = 0;
-    currSpringFrame = 0;
-    currBumpFrame = Constants.BOARD_BUMP_FRAMES;
-    springTop: Node = null!;
-    springHelix: Node = null!;
-    springHelixOriginScale = new Vec3();
-    center: Node = null!;
-    isMovingRight = true;
-    hasDiamond = false;
-    isMoving = false;
-    posBeforeDrop = new Vec3();
-    originScale = new Vec3();
-    currDropFrame = Constants.BOARD_DROP_FRAMES;
+    private _game: Game = null!;
+    public get game(): Game {
+        return this._game;
+    }
+    public set game(value: Game) {
+        this._game = value;
+    }
 
-    _game: Game = null!;
-
-    onLoad() {
+    protected onLoad(): void {
         this.originScale.set(this.node.scale);
         this.initCenter();
         this.initWave();
         this.initSpring();
     }
 
-    update() {
+    protected update(): void {
         if (this.type === Constants.BOARD_TYPE.SPRING || this.type === Constants.BOARD_TYPE.SPRINT) {
         }
     }
 
-    reset(type: number, pos: Vec3, level: number) {
+    public reset(type: number, pos: Vec3, level: number): void {
         this.isActive = false;
         this.type = type;
         this.node.setPosition(pos);
@@ -67,7 +122,6 @@ export class Board extends Component {
         if (this.type === Constants.BOARD_TYPE.NORMAL || this.type === Constants.BOARD_TYPE.DROP || this.type === Constants.BOARD_TYPE.SPRING) {
             this.isMoving = this.setMove(level);
         }
-
         if (this.type === Constants.BOARD_TYPE.GIANT) {
             this.node.setScale(this.originScale.x * Constants.BOARD_SCALE_GIANT, this.originScale.y, this.originScale.z);
         } else if (this.type === Constants.BOARD_TYPE.DROP) {
@@ -76,7 +130,6 @@ export class Board extends Component {
         } else {
             this.node.setScale(this.originScale);
         }
-
         this.springTop.active = false;
         if (this.type === Constants.BOARD_TYPE.SPRING || this.type === Constants.BOARD_TYPE.SPRINT) {
             this.springHelix.active = true;
@@ -85,11 +138,11 @@ export class Board extends Component {
         }
     }
 
-    setDrop() {
+    public setDrop(): void {
         this.currDropFrame = 0;
         this.posBeforeDrop.set(this.node.position);
     }
-    initSpring() {
+    protected initSpring(): void {
         this.springHelix = instantiate(this.springHelixPrefab);
         this.springHelixOriginScale = this.springHelix.getScale();
         this.springHelix.setScale(1.5, 1, 1.5);
@@ -102,11 +155,10 @@ export class Board extends Component {
         const pos = this.node.position.clone();
         pos.y += (Constants.BOARD_HEIGTH + Constants.SPRING_HEIGHT) / 2;
         this.springTop.setPosition(pos);
-
         this.setSpringPos();
     }
 
-    setSpring() {
+    public setSpring(): void {
         this.currSpringFrame = 0;
         this.setSpringPos();
         this.springHelix.setScale(1.5, 1, 1.5);
@@ -114,7 +166,7 @@ export class Board extends Component {
         this.springTop.active = true;
     }
 
-    setSpringPos() {
+    private setSpringPos(): void {
         let pos = this.node.position.clone();
         pos.y += Constants.BOARD_HEIGTH / 2;
         this.springHelix.setPosition(pos);
@@ -123,22 +175,22 @@ export class Board extends Component {
         this.springTop.setPosition(pos);
     }
 
-    setBump() {
+    public setBump(): void {
         this.currBumpFrame = 0;
     }
-    initCenter() {
+    private initCenter(): void {
         this.center = instantiate(this.centerPrefab);
         this.node.parent!.addChild(this.center);
         this.center.active = false;
     }
 
-    setCenterPos() {
+    public setCenterPos(): void {
         const pos = this.node.position.clone();
         pos.y += Constants.BOARD_HEIGTH / 2;
         this.center.setPosition(pos);
     }
 
-    initWave() {
+    protected initWave(): void {
         this.wave = instantiate(this.wavePrefab);
         this.node.parent!.addChild(this.wave);
         this.wave.active = false;
@@ -149,21 +201,21 @@ export class Board extends Component {
         this.waveOriginScale.set(this.wave.scale);
     }
 
-    getHeight() {
+    public getHeight() {
         return this.type === Constants.BOARD_TYPE.DROP ? Constants.BOARD_HEIGTH * Constants.BOARD_HEIGTH_SCALE_DROP : Constants.BOARD_HEIGTH;
     }
 
-    getRadius() {
+    public getRadius() {
         return this.type === Constants.BOARD_TYPE.GIANT ? Constants.BOARD_RADIUS * Constants.BOARD_RADIUS_SCALE_GIANT : Constants.BOARD_RADIUS;
 
     }
 
-    setMove(coeff: number): boolean {
+    public setMove(coeff: number): boolean {
         const t = utils.getDiffCoeff(coeff, 1, 10);
         return Math.random() * t > 5;
     }
 
-    revive() {
+    public revive(): void {
         this.isActive = false;
         this.isMoving = false;
         if (this.type === Constants.BOARD_TYPE.DROP) {

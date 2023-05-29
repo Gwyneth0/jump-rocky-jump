@@ -133,7 +133,7 @@ export class Ball extends Component {
     protected gameStart(): void{
         this.playTrail();
     }
-    protected reset(): void {
+    public reset(): void {
         this.boardCount = 0;
         this.diffLevel = 1;
         _tempPos.set(Constants.BOARD_INIT_POS);
