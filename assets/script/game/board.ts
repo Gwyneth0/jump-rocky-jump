@@ -1,7 +1,3 @@
-/**
- * Copyright (c) 2019 Xiamen Yaji Software Co.Ltd. All rights reserved.
- * Created by daisy on 2019/06/25.
- */
 import { _decorator, Component, Node, Vec3, Prefab, instantiate, MeshRenderer, Color } from "cc";
 import { Constants } from "../data/constants";
 import { Game } from "./game";
@@ -22,11 +18,9 @@ export class Board extends Component {
     @property({ type: Prefab })
     wavePrefab: Prefab = null!;
 
-    // 弹簧片
     @property({ type: Prefab })
     springTopPrefab: Prefab = null!;
 
-    // 弹簧
     @property({ type: Prefab })
     springHelixPrefab: Prefab = null!;
 
@@ -57,17 +51,12 @@ export class Board extends Component {
         this.initCenter();
         this.initWave();
         this.initSpring();
-        this.initDiamond();
     }
 
     update() {
-        this.effectBump();
-        this.effectWave();
         if (this.type === Constants.BOARD_TYPE.SPRING || this.type === Constants.BOARD_TYPE.SPRINT) {
             this.effectSpring();
         }
-        this.effectDrop();
-        this.effectMove();
     }
 
     reset(type: number, pos: Vec3, level: number) {
@@ -95,96 +84,11 @@ export class Board extends Component {
             this.springTop.active = true;
             this.setSpringPos();
         }
-
-        this.hasDiamond = false;
-        if (this.diamondList[0]) {
-            for (let i = 0; i < 5; i++) {
-                this.diamondList[i].active = false;
-            }
-
-            if (this.type === Constants.BOARD_TYPE.GIANT) {
-                for (let i = 0; i < 5; i++) {
-                    this.diamondList[i].active = true;
-                    this.hasDiamond = true;
-                }
-            } else if (this.type === Constants.BOARD_TYPE.NORMAL || this.type === Constants.BOARD_TYPE.DROP) {
-                if (Math.random() > .7) {
-                    this.diamondList[2].active = Constants.game.initFirstBoard;
-                    Constants.game.initFirstBoard = true;
-                    this.hasDiamond = true;
-                }
-            }
-
-            if (this.hasDiamond) {
-                this.setDiamondPos();
-            }
-        }
     }
 
     setDrop() {
         this.currDropFrame = 0;
         this.posBeforeDrop.set(this.node.position);
-    }
-
-    effectDrop() {
-        if (this.currDropFrame < Constants.BOARD_DROP_FRAMES) {
-            for (let i = 0; i < 5; i++) {
-                this.diamondList[i].active = false;
-            }
-
-            if (this.springTop.active) {
-                this.springHelix.active = false;
-                const pos = this.springTop.position;
-                this.springTop.setPosition(pos.x, pos.y - Constants.BOARD_DROP_STEP, pos.z);
-            }
-            _tempPos.set(this.node.position);
-            _tempPos.y -= Constants.BOARD_DROP_STEP;
-            this.node.setPosition(_tempPos);
-            this.setCenterPos();
-            this.currDropFrame++;
-        }
-    }
-
-    initDiamond() {
-        for (let i = 0; i < 5; i++) {
-            this.diamondList[i] = instantiate(this.diamondPrefab);
-            this.node.parent!.addChild(this.diamondList[i]);
-            this.diamondList[i].active = false;
-        }
-    }
-
-    setDiamondPos() {
-        const pos = new Vec3();
-        for (let i = 0; i < 5; i++) {
-            if (this.diamondList[i].active) {
-                pos.set(this.node.position);
-                pos.x += 1.4 * (i - 2);
-                pos.y += Constants.BOARD_HEIGTH;
-                this.diamondList[i].setPosition(pos);
-            }
-        }
-    }
-
-    hideDiamond(index: number) {
-        this.diamondList[index].active = false;
-    }
-
-    checkDiamond(x: number) {
-        if (this.hasDiamond) {
-            let flag = true;
-            for (let i = 0; i < 5; i++) {
-                if (this.diamondList[i].active) {
-                    flag = false;
-                    if (Math.abs(x - this.diamondList[i].position.x) <= Constants.DIAMOND_SCORE_AREA) {
-                        this.hideDiamond(i);
-                        Constants.game.addScore(Constants.DIAMOND_SCORE);
-                    }
-                }
-            }
-            if (flag) {
-                this.hasDiamond = false;
-            }
-        }
     }
     initSpring() {
         this.springHelix = instantiate(this.springHelixPrefab);
@@ -241,16 +145,6 @@ export class Board extends Component {
     setBump() {
         this.currBumpFrame = 0;
     }
-
-    effectBump() {
-        if (this.currBumpFrame < Constants.BOARD_BUMP_FRAMES) {
-            const pos = this.node.position;
-            this.node.setPosition(pos.x, pos.y + Constants.BOARD_BUMP_STEP[this.currBumpFrame], pos.z);
-            this.setCenterPos();
-            this.currBumpFrame++;
-        }
-    }
-
     initCenter() {
         this.center = instantiate(this.centerPrefab);
         this.node.parent!.addChild(this.center);
@@ -293,39 +187,6 @@ export class Board extends Component {
         }
     }
 
-    effectWave() {
-        if (this.currWaveFrame < Constants.BOARD_WAVE_FRAMES) {
-            if (this.currWaveFrame >= Constants.BOARD_WAVE_INNER_START_FRAMES) {
-                if (!this.waveInner.active) {
-                    this.waveInner.active = true;
-                }
-
-                const mat2 = this.waveInner.getComponent(MeshRenderer)!.material;
-                const pass = mat2!.passes[0];
-                const hColor = pass.getHandle('color');
-                const color = new Color('#dadada');
-                color.a = 127 - Math.sin(this.currWaveFrame * 0.05) * 127;
-                pass.setUniform(hColor, color);
-
-                const scale = this.waveInner.getScale();
-                this.waveInner.setScale(scale.x + Constants.BOARD_WAVE_INNER_STEP, scale.y, scale.z + Constants.BOARD_WAVE_INNER_STEP);
-            }
-
-            const mat2 = this.wave.getComponent(MeshRenderer)!.material;
-            const pass = mat2!.passes[0];
-            const hColor = pass.getHandle('color');
-            const color = new Color('#dadada');
-            color.a = 127 - Math.sin(this.currWaveFrame * 0.1) * 127;
-            pass.setUniform(hColor, color);
-            const scale = this.waveInner.getScale();
-            this.wave.setScale(scale.x + Constants.BOARD_WAVE_STEP, scale.y, scale.z + Constants.BOARD_WAVE_STEP);
-            this.currWaveFrame++;
-        } else {
-            this.wave.active = false;
-            this.waveInner.active = false;
-        }
-    }
-
     getHeight() {
         return this.type === Constants.BOARD_TYPE.DROP ? Constants.BOARD_HEIGTH * Constants.BOARD_HEIGTH_SCALE_DROP : Constants.BOARD_HEIGTH;
     }
@@ -338,32 +199,6 @@ export class Board extends Component {
     setMove(coeff: number): boolean {
         const t = utils.getDiffCoeff(coeff, 1, 10);
         return Math.random() * t > 5;
-    }
-
-    effectMove() {
-        if (this.isMoving) {
-            var pos = this.node.getPosition().clone();
-            var x = pos.x;
-            if (this.isMovingRight && x <= Constants.SCENE_MAX_OFFSET_X) {
-                x += Constants.BOARD_MOVING_STEP;
-                this.node.setPosition(x, pos.y, pos.z);
-            } else if (this.isMovingRight && x > Constants.SCENE_MAX_OFFSET_X) {
-                this.isMovingRight = false;
-            } else if (!this.isMovingRight && x >= - Constants.SCENE_MAX_OFFSET_X) {
-                x -= Constants.BOARD_MOVING_STEP;
-                this.node.setPosition(x, pos.y, pos.z);
-            } else if (!this.isMovingRight && x < - Constants.SCENE_MAX_OFFSET_X) {
-                this.isMovingRight = true
-            }
-            if (this.type === Constants.BOARD_TYPE.SPRING) {
-                this.springHelix.setPosition(this.node.position.x, this.springHelix.position.y, this.springHelix.position.z);
-                this.springTop.setPosition(this.node.position.x, this.springTop.position.y, this.springTop.position.z);
-            }
-            this.setCenterPos();
-            if (this.hasDiamond) {
-                this.setDiamondPos();
-            }
-        }
     }
 
     revive() {

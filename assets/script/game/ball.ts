@@ -59,7 +59,6 @@ export class Ball extends Component {
                     this.isJumpSpring = false;
                     this.currJumpFrame = 0;
                     this.hasSprint = false;
-
                 }
                 this.currJumpFrame += this.timeScale;
                 this.setPosY();
@@ -73,7 +72,6 @@ export class Ball extends Component {
                     const pos = this.node.position;
                     const boardPos = boardList[i].node.position;
                     if (Math.abs(pos.x - boardPos.x) <= boardList[i].getRadius() && Math.abs(pos.y - (boardPos.y + Constants.BOARD_HEIGTH)) <= Constants.DIAMOND_SCORE_AREA) {
-                        boardList[i].checkDiamond(pos.x);
                     }
                     if (this.jumpState === Constants.BALL_JUMP_STATE.FALLDOWN) {
                         if (this.currJumpFrame > Constants.PLAYER_MAX_DOWN_FRAMES || (this.currBoard.node.position.y - pos.y) - (Constants.BOARD_GAP + Constants.BOARD_HEIGTH) > 0.001) {
