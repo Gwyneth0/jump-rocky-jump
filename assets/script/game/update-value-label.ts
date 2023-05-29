@@ -3,14 +3,20 @@ const { ccclass, property } = _decorator;
 
 @ccclass("UpdateValueLabel")
 export class UpdateValueLabel extends Label {
-    isPlaying = false;
-    startVal = 0;
-    endVal = 0;
-    diffVal = 0;
-    currTime = 0;
-    changingTime = 0;
+    private _isPlaying = false;
+    public get isPlaying() {
+        return this._isPlaying;
+    }
+    public set isPlaying(value) {
+        this._isPlaying = value;
+    }
+    private startVal = 0;
+    private endVal = 0;
+    private diffVal = 0;
+    private currTime = 0;
+    private changingTime = 0;
 
-    playUpdateValue(startVal: number, endVal: number, changingTime: number) {
+    public playUpdateValue(startVal: number, endVal: number, changingTime: number): void {
         this.startVal = startVal;
         this.endVal = endVal;
         this.diffVal = this.endVal - this.startVal;
@@ -19,7 +25,7 @@ export class UpdateValueLabel extends Label {
         this.string = startVal.toString();
         this.isPlaying = true;
     }
-    update(dt) {
+    protected update(dt: number): void {
         if (!this.isPlaying) {
             return;
         }

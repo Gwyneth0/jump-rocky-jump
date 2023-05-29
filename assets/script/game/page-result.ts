@@ -23,47 +23,46 @@ export class PageResult extends Component {
 
     }
 
-    onEnable() {
+    protected onEnable(): void {
         Constants.game.node.on(Constants.GAME_EVENT.HIDETIPS, this.hideTips, this);
         Constants.game.node.on(Constants.GAME_EVENT.ADDSCORE, this.addScore, this);
         Constants.game.node.on(Constants.GAME_EVENT.DYING, this.gameDie, this);
-
         this.showTips(true);
         this.showResult(false);
         this.init();
     }
 
-    start(){
+    public start():void{
         const reviveComp = this.result.getComponent(Revive)!;
         reviveComp.pageResult = this;
     }
 
-    onDisable() {
+    protected onDisable():void {
         Constants.game.node.off(Constants.GAME_EVENT.HIDETIPS, this.hideTips, this);
         Constants.game.node.off(Constants.GAME_EVENT.ADDSCORE, this.addScore, this);
     }
 
-    addScore(score: number) {
+    protected addScore(score: number): void {
         this.targetProgress = score;
         let curProgress = Number(this.scoreLabel.string);
         this.scoreLabel.playUpdateValue(curProgress, this.targetProgress, (this.targetProgress - curProgress) / 20);
     }
 
-    gameDie(){
+    protected gameDie(): void{
         this.showTips(false);
         this.showResult(true);
     }
 
-    showTips(show: boolean){
+    protected showTips(show: boolean): void{
         this.nodeTips1.active = show;
         this.nodeTips2.active = show;
     }
 
-    hideTips(){
+    protected hideTips(): void{
         this.showTips(false);
     }
 
-    showResult(isShow: boolean){
+    public showResult(isShow: boolean): void{
         this.result.active = isShow;
     }
 }

@@ -30,21 +30,13 @@ enum BOARD_TYPE {
 }
 
 enum GAME_STATE {
-    /**
-     * @zh 游戏准备中
-     */
+ 
     READY = 1,
-    /**
-     * @zh 游戏中
-     */
+ 
     PLAYING = 2,
-    /**
-     * @zh 游戏暂停
-     */
+  
     PAUSE = 3,
-    /**
-     * @zh 游戏结束
-     */
+  
     OVER = 4,
 }
 

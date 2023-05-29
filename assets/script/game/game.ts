@@ -92,7 +92,7 @@ export class Game extends Component {
         }
     }
 
-    protected gameOver(): void {
+    public gameOver(): void {
         this.state = Constants.GAME_STATE.OVER;
         this.audioManager.playSound(false);
 

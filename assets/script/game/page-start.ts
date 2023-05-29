@@ -5,7 +5,7 @@ const { ccclass, property } = _decorator;
 @ccclass("PageStart")
 export class PageStart extends Component {
 
-    gameStart(){
+    public gameStart(): void{
         Constants.game.node.emit(Constants.GAME_EVENT.RESTART);
         Constants.game.audioManager.playClip();
     }

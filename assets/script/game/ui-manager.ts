@@ -5,19 +5,19 @@ const { ccclass, property } = _decorator;
 @ccclass("UIManager")
 export class UIManager extends Component {
     @property(Node)
-    pageStart: Node = null!;
+    private pageStart: Node = null!;
     @property(Node)
-    pageResult: Node = null!;
+    private pageResult: Node = null!;
 
-    onLoad(){
+    protected onLoad(): void{
         Constants.game.uiManager = this;
     }
 
-    start () {
+    protected start (): void {
         this.pageResult.active = false;
     }
-
-    showDialog(isMain: boolean, ...args: any[]){
+    
+    public showDialog(isMain: boolean, ...args: any[]): void{
         this.pageResult.active = !isMain;
         this.pageStart.active = isMain;
     }

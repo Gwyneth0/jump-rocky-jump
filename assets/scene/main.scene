@@ -3709,9 +3709,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "wgMenu": {
-      "__id__": 81
-    },
+    "_wgMenu": null,
     "historyLabel": {
       "__id__": 85
     },
