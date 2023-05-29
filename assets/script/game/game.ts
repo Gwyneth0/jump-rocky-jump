@@ -22,7 +22,13 @@ export class Game extends Component {
     audioManager: AudioManager = null!;
 
      // There is no diamond in first board
-    initFirstBoard = false;
+    private _initFirstBoard = false;
+    public get initFirstBoard() {
+        return this._initFirstBoard;
+    }
+    public set initFirstBoard(value) {
+        this._initFirstBoard = value;
+    }
 
     get ball(){
         return this._ball;
@@ -32,34 +38,32 @@ export class Game extends Component {
     score = 0;
     hasRevive = false;
     _ball: Ball = null!;
-    __preload () {
+    protected __preload (): void {
         Constants.game = this;
     }
-////
-    onLoad(){
+
+    protected onLoad(): void{
         if (!this.ballPref) {
             console.log('There is no ball!!');
             this.enabled = false;
             return;
         }
-
         const ball = instantiate(this.ballPref) as Node;
-        // @ts-ignore
         ball.parent = this.node.parent;
         this._ball = ball.getComponent(Ball)!;
     }
 
-    start(){
+    protected start(): void{
         this.node.on(Constants.GAME_EVENT.RESTART, this.gameStart, this);
         this.node.on(Constants.GAME_EVENT.REVIVE, this.gameRevive, this);
     }
 
-    onDestroy() {
+    protected onDestroy(): void {
         this.node.off(Constants.GAME_EVENT.RESTART, this.gameStart, this);
         this.node.off(Constants.GAME_EVENT.REVIVE, this.gameRevive, this);
     }
 
-    resetGame() {
+    protected resetGame(): void {
         this.state = Constants.GAME_STATE.READY;
         this._ball.reset();
         this.cameraCtrl.reset();
@@ -67,7 +71,7 @@ export class Game extends Component {
         this.uiManager.showDialog(true);
     }
 
-    gameStart(){
+    protected gameStart(): void{
         this.audioManager.playSound();
         this.uiManager.showDialog(false);
         this.state = Constants.GAME_STATE.PLAYING;
@@ -75,7 +79,7 @@ export class Game extends Component {
         this.score = 0;
     }
 
-    gameDie(){
+    public gameDie(): void{
         this.audioManager.playSound(false);
         this.state = Constants.GAME_STATE.PAUSE;
 
@@ -88,14 +92,14 @@ export class Game extends Component {
         }
     }
 
-    gameOver() {
+    protected gameOver(): void {
         this.state = Constants.GAME_STATE.OVER;
         this.audioManager.playSound(false);
 
         this.resetGame();
     }
 
-    gameRevive(){
+    protected gameRevive(): void {
         this.hasRevive = true;
         this.state = Constants.GAME_STATE.READY;
         this.ball.revive();
@@ -105,7 +109,7 @@ export class Game extends Component {
         }, 1);
     }
 
-    addScore(score: number){
+    public addScore(score: number): void{
         this.score += score;
         this.node.emit(Constants.GAME_EVENT.ADDSCORE, this.score);
     }

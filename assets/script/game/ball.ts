@@ -26,18 +26,18 @@ export class Ball extends Component {
     private jumpState = Constants.BALL_JUMP_STATE.JUMPUP;
     private currBoardIdx = 0;
     private diffLevel = 1;
-    private currJumpFrame = 0; 
+    private currJumpFrame = 0;
     private hasSprint = false;
     private isTouch = false;
-    private touchPosX = 0; 
-    private movePosX = 0; 
+    private touchPosX = 0;
+    private movePosX = 0;
     private isJumpSpring = false;
     private boardGroupCount = 0;
     private trailNode: Node | null = null;
     private timeScale = 0;
     private _wPos = new Vec3();
 
-    protected start (): void {
+    protected start(): void {
         Constants.game.node.on(Node.EventType.TOUCH_START, this.onTouchStart, this);
         Constants.game.node.on(Node.EventType.TOUCH_END, this.onTouchEnd, this);
         Constants.game.node.on(Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
@@ -118,21 +118,24 @@ export class Ball extends Component {
         }
     }
 
-    protected onTouchStart(touch: Touch, event: EventTouch): void{
+    protected onTouchStart(touch: Touch, event: EventTouch): void {
         this.isTouch = true;
         this.touchPosX = touch.getLocation().x;
         this.movePosX = this.touchPosX;
     }
 
-    protected onTouchMove(touch: Touch, event: EventTouch): void{
+    protected onTouchMove(touch: Touch, event: EventTouch): void {
         this.movePosX = touch.getLocation().x;
     }
-    protected onTouchEnd(touch: Touch, event: EventTouch): void{
+
+    protected onTouchEnd(touch: Touch, event: EventTouch): void {
         this.isTouch = false;
     }
-    protected gameStart(): void{
+
+    protected gameStart(): void {
         this.playTrail();
     }
+
     public reset(): void {
         this.boardCount = 0;
         this.diffLevel = 1;
@@ -147,16 +150,20 @@ export class Ball extends Component {
         this.show();
         this.setTrailPos();
     }
+
     protected updateBall(): void {
         this.trailNode = PoolManager.instance.getNode(this.trail02Prefab, this.node.parent);
     }
+
     protected show(): void {
         this.node.active = true;
     }
+
     protected hide(): void {
         this.node.active = false;
     }
-    protected activeCurrBoard():void {
+
+    protected activeCurrBoard(): void {
         const pos = this.node.position;
         const boardPos = this.currBoard.node.position;
         const boardType = this.currBoard.type;
@@ -186,20 +193,17 @@ export class Ball extends Component {
                 this.newBoard();
             }
         }
-
         this.isJumpSpring = boardType === Constants.BOARD_TYPE.SPRING;
         this.currBoard.setBump();
         if (boardType == Constants.BOARD_TYPE.SPRING || boardType == Constants.BOARD_TYPE.SPRINT) {
             this.currBoard.setSpring()
         }
-
         const boardList = Constants.game.boardManager.getBoardList();
         if (boardType === Constants.BOARD_TYPE.DROP) {
             for (let l = 0; l < this.currBoardIdx; l++) {
                 boardList[l].setDrop();
             }
         }
-
         const c = boardPos.y + Constants.CAMERA_OFFSET_Y;
         Constants.game.cameraCtrl.setOriginPosY(c);
         Constants.game.cameraCtrl.preType = boardType;
@@ -227,7 +231,6 @@ export class Ball extends Component {
         const cameraComp = Constants.game.cameraCtrl.node.getComponent(Camera)!;
         this._wPos.set(this.node.worldPosition);
         cameraComp.convertToUINode(this._wPos, find('Canvas/resultUI')!, pos);
-
         pos.x += 50;
         node.setPosition(pos);
         node.getComponentInChildren(Label)!.string = `+${score}`;
@@ -273,7 +276,7 @@ export class Ball extends Component {
             if (this.currBoard.type === Constants.BOARD_TYPE.SPRING) {
                 if (this.currJumpFrame < Constants.BALL_JUMP_FRAMES_SPRING) {
                     const step = Constants.BALL_JUMP_FRAMES_SPRING - this.currJumpFrame - 1;
-                    _tempPos.y -= Constants.BALL_JUMP_STEP_SPRING[Math.floor((step >= 0 ? step : 0)/ 3)] * this.timeScale;
+                    _tempPos.y -= Constants.BALL_JUMP_STEP_SPRING[Math.floor((step >= 0 ? step : 0) / 3)] * this.timeScale;
                 } else {
                     _tempPos.y -= Constants.BALL_JUMP_STEP_SPRING[0] * this.timeScale;
                 }
@@ -286,7 +289,7 @@ export class Ball extends Component {
             this.node.setPosition(_tempPos);
         } else if (this.jumpState === Constants.BALL_JUMP_STATE.SPRINT) {
             _tempPos.y += Constants.BALL_JUMP_STEP_SPRINT * this.timeScale;
-            this.node.setPosition(_tempPos);        
+            this.node.setPosition(_tempPos);
 
         }
     }
@@ -296,24 +299,23 @@ export class Ball extends Component {
         const x = Math.abs(pos.x - boardPos.x);
         const y = pos.y - boardPos.y;
         if (x <= board.getRadius()) {
-            if (y >= 0 && y <= Constants.BALL_RADIUS + board.getHeight() / 2){
+            if (y >= 0 && y <= Constants.BALL_RADIUS + board.getHeight() / 2) {
                 return true;
             }
             if (this.isJumpSpring && this.currJumpFrame >= Constants.BALL_JUMP_FRAMES_SPRING) {
                 if (Math.abs(y) < Constants.BALL_JUMP_STEP_SPRING[0]) {
                     return true;
                 }
-            } else if (!this.isJumpSpring && this.currJumpFrame >= Constants.BALL_JUMP_FRAMES){
-                if (Math.abs(y) < Constants.BALL_JUMP_STEP[0]){
+            } else if (!this.isJumpSpring && this.currJumpFrame >= Constants.BALL_JUMP_FRAMES) {
+                if (Math.abs(y) < Constants.BALL_JUMP_STEP[0]) {
                     return true;
                 }
             }
         }
-
         return false;
     }
 
-    revive() {
+    public revive(): void {
         this.currBoardIdx--;
         if (this.currBoard.type === Constants.BOARD_TYPE.SPRINT) {
             this.currBoardIdx++;
@@ -333,12 +335,11 @@ export class Ball extends Component {
         this.setTrailPos();
     }
 
-
-    playTrail(){
+    protected playTrail(): void {
         ParticleUtils.play(this.trailNode!);
     }
 
-    setTrailPos() {
+    protected setTrailPos(): void {
         const pos = this.node.position;
         this.trailNode!.setPosition(pos.x, pos.y - 0.1, pos.z);
     }
