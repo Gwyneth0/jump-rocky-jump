@@ -13,38 +13,28 @@ export class UpdateValueLabel extends Label {
     playUpdateValue(startVal: number, endVal: number, changingTime: number) {
         this.startVal = startVal;
         this.endVal = endVal;
-
         this.diffVal = this.endVal - this.startVal;
-
         this.currTime = 0;
         this.changingTime = changingTime;
-
         this.string = startVal.toString();
-
         this.isPlaying = true;
     }
-
     update(dt) {
         if (!this.isPlaying) {
             return;
         }
-
         if (this.currTime < this.changingTime) {
             this.currTime += dt;
-
             var currVal = this.startVal + parseInt((this.currTime / this.changingTime * this.diffVal).toString());
             if (currVal < this.startVal) {
                 currVal = this.startVal;
             } else if (currVal > this.endVal) {
                 currVal = this.endVal;
             }
-
-            this.string = `${currVal}`;
+            this.string = currVal.toString();
             return;
         }
-
-        this.string = `${this.endVal}`;
+        this.string = this.endVal.toString();
         this.isPlaying = false;
-
     }
 }

@@ -9,17 +9,14 @@ const _tempPos = new Vec3();
 
 @ccclass("Ball")
 export class Ball extends Component {
+
     @property(Prefab)
     diamondParticlePrefab: Prefab = null!;
     @property({ type: Prefab })
     scoreAniPrefab: Prefab = null!;
-
-
     @property({ type: Prefab })
     trail02Prefab: Prefab = null!;
-
     currBoard: Board = null!;
-
     boardCount = 0;
     jumpState = Constants.BALL_JUMP_STATE.JUMPUP;
     currBoardIdx = 0;
@@ -27,25 +24,19 @@ export class Ball extends Component {
     currJumpFrame = 0; 
     hasSprint = false;
     isTouch = false;
-
     touchPosX = 0; 
     movePosX = 0; 
     isJumpSpring = false;
     boardGroupCount = 0;
     trailNode: Node | null = null;
     timeScale = 0;
-
     _wPos = new Vec3();
-
 
     start () {
         Constants.game.node.on(Node.EventType.TOUCH_START, this.onTouchStart, this);
         Constants.game.node.on(Node.EventType.TOUCH_END, this.onTouchEnd, this);
         Constants.game.node.on(Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
         Constants.game.node.on(Constants.GAME_EVENT.RESTART, this.gameStart, this);
-
-        // @ts-ignore
-        // this.trailNode = PoolManager.instance.getNode(this.trail01Prefab, this.node.parent);
         this.updateBall();
         this.reset();
     }
@@ -68,13 +59,11 @@ export class Ball extends Component {
                     this.isJumpSpring = false;
                     this.currJumpFrame = 0;
                     this.hasSprint = false;
-                    // const eulerAngles = this.node.eulerAngles;
-                    // this.node.eulerAngles = new Vec3(eulerAngles.x, -Constants.BALL_SPRINT_STEP_Y, eulerAngles.z);
+
                 }
                 this.currJumpFrame += this.timeScale;
                 this.setPosY();
                 this.setPosX();
-                // this.setRotY();
                 this.touchPosX = this.movePosX;
                 const y = this.node.position.y + Constants.CAMERA_OFFSET_Y_SPRINT;
                 Constants.game.cameraCtrl.setOriginPosY(y);
@@ -93,7 +82,6 @@ export class Ball extends Component {
                             return;
                         }
 
-                        // 是否在当前检测的板上
                         if (this.isOnBoard(board)) {
                             this.currBoard = board;
                             this.currBoardIdx = i;
@@ -107,12 +95,10 @@ export class Ball extends Component {
 
                 if (this.jumpState === Constants.BALL_JUMP_STATE.JUMPUP) {
                     if (this.isJumpSpring && this.currJumpFrame >= Constants.BALL_JUMP_FRAMES_SPRING) {
-                        // 处于跳跃状态并且当前跳跃高度超过弹簧板跳跃高度
                         this.jumpState = Constants.BALL_JUMP_STATE.FALLDOWN;
                         this.currJumpFrame = 0;
                     } else {
                         if (!this.isJumpSpring && this.currJumpFrame >= Constants.BALL_JUMP_FRAMES) {
-                            // 跳跃距离达到限制，开始下落
                             this.jumpState = Constants.BALL_JUMP_STATE.FALLDOWN;
                             this.currJumpFrame = 0;
                         }
@@ -168,9 +154,6 @@ export class Ball extends Component {
     }
 
     updateBall() {
-        // PoolManager.instance.putNode(this.trailNode);
-
-        // @ts-ignore
         this.trailNode = PoolManager.instance.getNode(this.trail02Prefab, this.node.parent);
     }
 
@@ -191,7 +174,6 @@ export class Ball extends Component {
         this.currJumpFrame = 0;
         if (boardType === Constants.BOARD_TYPE.SPRINT) {
             this.jumpState = Constants.BALL_JUMP_STATE.SPRINT;
-            // this.node.eulerAngles = new Vec3(this.node.eulerAngles.x, this.node.eulerAngles.y, 0);
             Constants.game.cameraCtrl.setOriginPosX(boardPos.x);
         } else {
             this.jumpState = Constants.BALL_JUMP_STATE.JUMPUP;
@@ -224,7 +206,6 @@ export class Ball extends Component {
             this.currBoard.setSpring()
         }
 
-        // 掉落板开始掉落
         const boardList = Constants.game.boardManager.getBoardList();
         if (boardType === Constants.BOARD_TYPE.DROP) {
             for (let l = 0; l < this.currBoardIdx; l++) {
@@ -237,7 +218,6 @@ export class Ball extends Component {
         Constants.game.cameraCtrl.preType = boardType;
     }
 
-    // 创建新跳板信息
     newBoard() {
         let type = Constants.BOARD_TYPE.NORMAL;
         if (this.boardGroupCount <= 0) {
@@ -268,7 +248,6 @@ export class Ball extends Component {
         Constants.game.boardManager.newBoard(type, this.diffLevel);
     }
 
-    // 界面上的弹跳分数
     showScore(score: number) {
         const node = PoolManager.instance.getNode(this.scoreAniPrefab, find('Canvas/resultUI')!);
         const pos = new Vec3();
@@ -308,10 +287,8 @@ export class Ball extends Component {
         }
     }
 
-    // 垂直位置变化，每帧变动
     setPosY() {
         _tempPos.set(this.node.position);
-        // 跳跃状态处理
         if (this.jumpState === Constants.BALL_JUMP_STATE.JUMPUP) {
             if (this.isJumpSpring) {
                 _tempPos.y += Constants.BALL_JUMP_STEP_SPRING[Math.floor(this.currJumpFrame / 3)] * this.timeScale;
@@ -319,7 +296,6 @@ export class Ball extends Component {
                 _tempPos.y += Constants.BALL_JUMP_STEP[Math.floor(this.currJumpFrame / 2)] * this.timeScale;
             }
             this.node.setPosition(_tempPos);
-            // 下落状态处理
         } else if (this.jumpState === Constants.BALL_JUMP_STATE.FALLDOWN) {
             if (this.currBoard.type === Constants.BOARD_TYPE.SPRING) {
                 if (this.currJumpFrame < Constants.BALL_JUMP_FRAMES_SPRING) {
@@ -350,7 +326,6 @@ export class Ball extends Component {
             if (y >= 0 && y <= Constants.BALL_RADIUS + board.getHeight() / 2){
                 return true;
             }
-
             if (this.isJumpSpring && this.currJumpFrame >= Constants.BALL_JUMP_FRAMES_SPRING) {
                 if (Math.abs(y) < Constants.BALL_JUMP_STEP_SPRING[0]) {
                     return true;
