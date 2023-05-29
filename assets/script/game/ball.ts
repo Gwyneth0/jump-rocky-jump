@@ -11,7 +11,6 @@ const _tempPos = new Vec3();
 export class Ball extends Component {
 
     @property(Prefab)
-    diamondParticlePrefab: Prefab = null!;
     @property({ type: Prefab })
     scoreAniPrefab: Prefab = null!;
     @property({ type: Prefab })
@@ -102,18 +101,13 @@ export class Ball extends Component {
                         }
                     }
                 }
-
                 this.setPosY();
                 this.setPosX();
-                // this.setRotZ();
-
                 if (this.currBoard.type !== Constants.BOARD_TYPE.SPRINT) {
                     Constants.game.cameraCtrl.setOriginPosX(this.node.position.x);
                 }
-
                 this.touchPosX = this.movePosX;
             }
-
             this.setTrailPos();
         }
     }
@@ -127,15 +121,12 @@ export class Ball extends Component {
     onTouchMove(touch: Touch, event: EventTouch){
         this.movePosX = touch.getLocation().x;
     }
-
     onTouchEnd(touch: Touch, event: EventTouch){
         this.isTouch = false;
     }
-
     gameStart(){
         this.playTrail();
     }
-
     reset() {
         this.boardCount = 0;
         this.diffLevel = 1;
@@ -150,19 +141,15 @@ export class Ball extends Component {
         this.show();
         this.setTrailPos();
     }
-
     updateBall() {
         this.trailNode = PoolManager.instance.getNode(this.trail02Prefab, this.node.parent);
     }
-
     show() {
         this.node.active = true;
     }
-
     hide() {
         this.node.active = false;
     }
-
     activeCurrBoard() {
         const pos = this.node.position;
         const boardPos = this.currBoard.node.position;
@@ -176,21 +163,18 @@ export class Ball extends Component {
         } else {
             this.jumpState = Constants.BALL_JUMP_STATE.JUMPUP;
         }
-
         if (!this.currBoard.isActive) {
             this.currBoard.isActive = true;
             let score = Constants.SCORE_BOARD_NOT_CENTER;
             if (boardType !== Constants.BOARD_TYPE.NORMAL && boardType !== Constants.BOARD_TYPE.DROP || Math.abs(pos.x - boardPos.x) <= Constants.BOARD_RADIUS_CENTER) {
                 score = Constants.SCORE_BOARD_CENTER;
             }
-
             Constants.game.addScore(score);
             this.showScore(score);
             this.boardCount++;
             if (this.boardCount === 5) {
                 Constants.game.node.emit(Constants.GAME_EVENT.HIDETIPS);
             }
-
             this.diffLevel += score / 2;
             for (let l = this.currBoardIdx - Constants.BOARD_NEW_INDEX; l > 0; l--) {
                 this.newBoard();
@@ -199,7 +183,6 @@ export class Ball extends Component {
 
         this.isJumpSpring = boardType === Constants.BOARD_TYPE.SPRING;
         this.currBoard.setBump();
-        this.currBoard.setWave();
         if (boardType == Constants.BOARD_TYPE.SPRING || boardType == Constants.BOARD_TYPE.SPRINT) {
             this.currBoard.setSpring()
         }
@@ -224,20 +207,6 @@ export class Ball extends Component {
             if (t < 4.2) {
                 type = Constants.BOARD_TYPE.NORMAL;
                 this.boardGroupCount = 2;
-            } else if (t <= 5.5) {
-                type = Constants.BOARD_TYPE.GIANT;
-                this.boardGroupCount = 3;
-            } else if (t <= 6.2) {
-                type = Constants.BOARD_TYPE.SPRING;
-                if (Math.random() > 0.5) {
-                    this.boardGroupCount = 2;
-                }
-            } else if (t <= 7) {
-                type = Constants.BOARD_TYPE.DROP;
-                this.boardGroupCount = 3
-            } else if (t <= 7.5 && false === this.hasSprint) {
-                type = Constants.BOARD_TYPE.SPRINT;
-                this.hasSprint = true;
             } else {
                 type = Constants.BOARD_TYPE.NORMAL;
             }

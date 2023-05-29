@@ -55,7 +55,6 @@ export class Board extends Component {
 
     update() {
         if (this.type === Constants.BOARD_TYPE.SPRING || this.type === Constants.BOARD_TYPE.SPRINT) {
-            this.effectSpring();
         }
     }
 
@@ -124,24 +123,6 @@ export class Board extends Component {
         this.springTop.setPosition(pos);
     }
 
-    effectSpring() {
-        const z = this.type === Constants.BOARD_TYPE.SPRINT ? Constants.SPRING_HELIX_STEP_SPIRNT : Constants.SPRING_HELIX_STEP;
-        const y = this.type === Constants.BOARD_TYPE.SPRINT ? Constants.SPRING_TOP_STEP_SPRINT : Constants.SPRING_TOP_STEP;
-        const scale = this.springHelix.scale;
-        const pos = this.springTop.position;
-        if (this.currSpringFrame < Constants.BOARD_SPRING_FRAMES) {
-            this.springHelix.setScale(scale.x, scale.y + z, scale.z);
-            this.springTop.setPosition(pos.x, pos.y + y, pos.z);
-            this.currSpringFrame++;
-        } else if (this.currSpringFrame >= Constants.BOARD_SPRING_FRAMES && this.currSpringFrame < 2 * Constants.BOARD_SPRING_FRAMES) {
-            this.springHelix.setScale(scale.x, scale.y - z, scale.z);
-            this.springTop.setPosition(pos.x, pos.y - y, pos.z);
-            this.currSpringFrame++;
-        } else {
-            this.springHelix.active = false;
-        }
-    }
-
     setBump() {
         this.currBumpFrame = 0;
     }
@@ -166,25 +147,6 @@ export class Board extends Component {
         this.waveInner.active = false;
         this.currWaveFrame = Constants.BOARD_WAVE_FRAMES;
         this.waveOriginScale.set(this.wave.scale);
-    }
-
-    setWave() {
-        if (this.type != Constants.BOARD_TYPE.GIANT) {
-            this.currWaveFrame = 0;
-            const pos = this.node.position.clone();
-            pos.y += Constants.WAVE_OFFSET_Y;
-            this.wave.setPosition(pos);
-            this.wave.setScale(this.waveOriginScale.clone());
-            this.wave.active = true;
-            const mat2 = this.wave.getComponent(MeshRenderer)!.material;
-            const pass = mat2!.passes[0];
-            const hColor = pass.getHandle('color');
-            const color = new Color('#dadada');
-            color.a = 127;
-            pass.setUniform(hColor, color);
-            this.waveInner.setPosition(pos);
-            this.waveInner.setScale(this.waveOriginScale.clone());
-        }
     }
 
     getHeight() {
