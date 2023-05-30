@@ -30,13 +30,13 @@
         "__id__": 15
       },
       {
-        "__id__": 108
+        "__id__": 109
       }
     ],
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 111
+      "__id__": 112
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -67,7 +67,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 112
+      "__id__": 113
     },
     "_id": "42ecfffa-0786-408f-a8d4-5fc9353e5ba9"
   },
@@ -527,14 +527,11 @@
         "__id__": 38
       },
       {
-        "__id__": 101
+        "__id__": 102
       }
     ],
     "_active": true,
     "_components": [
-      {
-        "__id__": 103
-      },
       {
         "__id__": 104
       },
@@ -545,7 +542,10 @@
         "__id__": 106
       },
       {
-        "__id__": 110
+        "__id__": 107
+      },
+      {
+        "__id__": 111
       }
     ],
     "_prefab": null,
@@ -1336,7 +1336,7 @@
         "__id__": 56
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 98
@@ -1346,6 +1346,9 @@
       },
       {
         "__id__": 100
+      },
+      {
+        "__id__": 101
       }
     ],
     "_prefab": null,
@@ -3504,6 +3507,28 @@
     "_id": "d1H4NKYadOza89GUcucNbU"
   },
   {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 38
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "playOnLoad": false,
+    "_clips": [
+      {
+        "__uuid__": "4d663e5e-c1c3-4e1c-9e12-f4409ced4aeb",
+        "__expectedType__": "cc.AnimationClip"
+      }
+    ],
+    "_defaultClip": {
+      "__uuid__": "4d663e5e-c1c3-4e1c-9e12-f4409ced4aeb",
+      "__expectedType__": "cc.AnimationClip"
+    },
+    "_id": "2al7ijfLBAKaDPBWaTz5tk"
+  },
+  {
     "__type__": "cc.Node",
     "_name": "UICamera_Canvas",
     "_objFlags": 0,
@@ -3514,7 +3539,7 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 102
+        "__id__": 103
       }
     ],
     "_prefab": null,
@@ -3552,7 +3577,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 101
+      "__id__": 102
     },
     "_enabled": true,
     "__prefab": null,
@@ -3621,7 +3646,7 @@
     "_enabled": true,
     "__prefab": null,
     "_cameraComponent": {
-      "__id__": 102
+      "__id__": 103
     },
     "_alignCanvasWithScreen": true,
     "_id": "0bBfXlxgNDTqJ+BkwhqO1h"
@@ -3646,10 +3671,10 @@
       "__id__": 7
     },
     "uiManager": {
-      "__id__": 106
+      "__id__": 107
     },
     "audioManager": {
-      "__id__": 107
+      "__id__": 108
     },
     "_id": "58M8st+iVJBrmL4VqzjTmw"
   },
@@ -3675,7 +3700,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 108
+      "__id__": 109
     },
     "_enabled": true,
     "__prefab": null,
@@ -3700,10 +3725,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 109
+        "__id__": 110
       },
       {
-        "__id__": 107
+        "__id__": 108
       }
     ],
     "_prefab": null,
@@ -3741,7 +3766,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 108
+      "__id__": 109
     },
     "_enabled": true,
     "__prefab": null,
@@ -3791,22 +3816,22 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 113
-    },
-    "shadows": {
       "__id__": 114
     },
-    "_skybox": {
+    "shadows": {
       "__id__": 115
     },
-    "fog": {
+    "_skybox": {
       "__id__": 116
     },
-    "octree": {
+    "fog": {
       "__id__": 117
     },
-    "lightProbeInfo": {
+    "octree": {
       "__id__": 118
+    },
+    "lightProbeInfo": {
+      "__id__": 119
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false

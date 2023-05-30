@@ -5,23 +5,6 @@
   "uuid": "b4abfee9-978f-4790-b2f7-4104d4fdf862",
   "files": [],
   "subMetas": {
-    "dec11": {
-      "ver": "1.1.0",
-      "importer": "gltf-mesh",
-      "name": "Cylinder003.mesh",
-      "id": "dec11",
-      "displayName": "",
-      "uuid": "b4abfee9-978f-4790-b2f7-4104d4fdf862@dec11",
-      "imported": true,
-      "files": [
-        ".bin",
-        ".json"
-      ],
-      "subMetas": {},
-      "userData": {
-        "gltfIndex": 0
-      }
-    },
     "1cd92": {
       "ver": "1.0.3",
       "importer": "gltf-embeded-image",
@@ -39,6 +22,40 @@
       "displayName": "",
       "id": "1cd92",
       "name": "plate01.jpg.image"
+    },
+    "dec11": {
+      "ver": "1.1.0",
+      "importer": "gltf-mesh",
+      "name": "Cylinder003.mesh",
+      "id": "dec11",
+      "displayName": "",
+      "uuid": "b4abfee9-978f-4790-b2f7-4104d4fdf862@dec11",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {},
+      "userData": {
+        "gltfIndex": 0
+      }
+    },
+    "181cb": {
+      "importer": "gltf-embeded-image",
+      "uuid": "b4abfee9-978f-4790-b2f7-4104d4fdf862@181cb",
+      "displayName": "",
+      "id": "181cb",
+      "name": "贴图 #4.image",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.3",
+      "imported": true,
+      "files": [
+        ".json",
+        ".png"
+      ],
+      "subMetas": {}
     },
     "442db": {
       "ver": "1.0.22",
@@ -61,7 +78,7 @@
         "premultiplyAlpha": false,
         "anisotropy": 0,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "b4abfee9-978f-4790-b2f7-4104d4fdf862@1cd92"
+        "imageUuidOrDatabaseUri": "b4abfee9-978f-4790-b2f7-4104d4fdf862@181cb"
       }
     },
     "a47c6": {
@@ -119,8 +136,8 @@
     },
     "imageMetas": [
       {
-        "name": "plate01.jpg",
-        "uri": "b4abfee9-978f-4790-b2f7-4104d4fdf862@1cd92"
+        "name": "贴图 #4",
+        "uri": "b4abfee9-978f-4790-b2f7-4104d4fdf862@181cb"
       }
     ],
     "legacyFbxImporter": true,
