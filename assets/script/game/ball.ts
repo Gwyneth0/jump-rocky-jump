@@ -2,7 +2,7 @@ import { _decorator, Component, Node, Touch, EventTouch, Vec3, Label, Prefab, Pa
 import { Constants } from "../data/constants";
 import { Board } from "./board";
 import { utils } from "../utils/utils";
-import { PoolManager } from "../utils/pool-manager";
+import { PoolManager } from "../utils/poolManager";
 const { ccclass, property } = _decorator;
 const _tempPos = new Vec3();
 
@@ -77,7 +77,6 @@ export class Ball extends Component {
                             Constants.game.gameDie();
                             return;
                         }
-
                         if (this.isOnBoard(board)) {
                             this.currBoard = board;
                             this.currBoardIdx = i;

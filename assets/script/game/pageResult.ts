@@ -1,6 +1,6 @@
 import { _decorator, Component, Node } from "cc";
 import { Constants } from "../data/constants";
-import { UpdateValueLabel } from "./update-value-label";
+import { UpdateValueLabel } from "./updateValueLabel";
 import { Revive } from "./revive";
 const { ccclass, property } = _decorator;
 

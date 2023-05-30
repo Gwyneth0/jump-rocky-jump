@@ -2,10 +2,10 @@
 import { _decorator, Component, Node, instantiate, Prefab } from "cc";
 import { Constants } from "../data/constants";
 import { Ball } from "./ball";
-import { BoardManager } from "./board-manager";
-import { CameraCtrl } from "./camera-ctrl";
-import { UIManager } from "./ui-manager";
-import { AudioManager } from "./audio-manager";
+import { BoardManager } from "./boardManager";
+import { CameraCtrl } from "./cameraCtrl";
+import { UIManager } from "./uiManager";
+import { AudioManager } from "./audioManager";
 const { ccclass, property } = _decorator;
 
 @ccclass("Game")

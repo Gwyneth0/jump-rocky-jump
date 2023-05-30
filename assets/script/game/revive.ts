@@ -1,6 +1,6 @@
 import { _decorator, Component, SpriteComponent, Node, WidgetComponent, Label } from "cc";
 import { Constants } from "../data/constants";
-import { PageResult } from "./page-result";
+import { PageResult } from "./pageResult";
 const { ccclass, property } = _decorator;
 
 @ccclass("Revive")
