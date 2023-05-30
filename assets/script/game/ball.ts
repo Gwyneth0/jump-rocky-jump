@@ -13,7 +13,6 @@ export class Ball extends Component {
     @property({ type: Prefab })
     private scoreAniPrefab: Prefab = null!;
     @property({ type: Prefab })
-    private trail02Prefab: Prefab = null!;
     private _currBoard: Board = null!;
     public get currBoard(): Board {
         return this._currBoard;
@@ -32,7 +31,6 @@ export class Ball extends Component {
     private movePosX = 0;
     private isJumpSpring = false;
     private boardGroupCount = 0;
-    private trailNode: Node | null = null;
     private timeScale = 0;
     private _wPos = new Vec3();
 
@@ -40,8 +38,6 @@ export class Ball extends Component {
         Constants.game.node.on(Node.EventType.TOUCH_START, this.onTouchStart, this);
         Constants.game.node.on(Node.EventType.TOUCH_END, this.onTouchEnd, this);
         Constants.game.node.on(Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
-        Constants.game.node.on(Constants.GAME_EVENT.RESTART, this.gameStart, this);
-        this.updateBall();
         this.reset();
     }
 
@@ -49,7 +45,6 @@ export class Ball extends Component {
         Constants.game.node.off(Node.EventType.TOUCH_START, this.onTouchStart, this);
         Constants.game.node.off(Node.EventType.TOUCH_END, this.onTouchEnd, this);
         Constants.game.node.off(Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
-        Constants.game.node.off(Constants.GAME_EVENT.RESTART, this.gameStart, this);
     }
 
     protected update(deltaTime: number): void {
@@ -79,7 +74,6 @@ export class Ball extends Component {
                     }
                     if (this.jumpState === Constants.BALL_JUMP_STATE.FALLDOWN) {
                         if (this.currJumpFrame > Constants.PLAYER_MAX_DOWN_FRAMES || (this.currBoard.node.position.y - pos.y) - (Constants.BOARD_GAP + Constants.BOARD_HEIGTH) > 0.001) {
-                            ParticleUtils.stop(this.trailNode!);
                             Constants.game.gameDie();
                             return;
                         }
@@ -111,7 +105,6 @@ export class Ball extends Component {
                 }
                 this.touchPosX = this.movePosX;
             }
-            this.setTrailPos();
         }
     }
 
@@ -129,10 +122,6 @@ export class Ball extends Component {
         this.isTouch = false;
     }
 
-    protected gameStart(): void {
-        this.playTrail();
-    }
-
     public reset(): void {
         this.boardCount = 0;
         this.diffLevel = 1;
@@ -145,12 +134,9 @@ export class Ball extends Component {
         this.hasSprint = false;
         this.currBoardIdx = 0;
         this.show();
-        this.setTrailPos();
     }
 
-    protected updateBall(): void {
-        this.trailNode = PoolManager.instance.getNode(this.trail02Prefab, this.node.parent);
-    }
+
 
     protected show(): void {
         this.node.active = true;
@@ -328,16 +314,5 @@ export class Ball extends Component {
         const y = this.currBoard.node.position.y + Constants.CAMERA_OFFSET_Y;
         Constants.game.cameraCtrl.setOriginPosX(pos.x);
         Constants.game.cameraCtrl.setOriginPosY(y);
-        this.playTrail();
-        this.setTrailPos();
-    }
-
-    protected playTrail(): void {
-        ParticleUtils.play(this.trailNode!);
-    }
-
-    protected setTrailPos(): void {
-        const pos = this.node.position;
-        this.trailNode!.setPosition(pos.x, pos.y - 0.1, pos.z);
     }
 }

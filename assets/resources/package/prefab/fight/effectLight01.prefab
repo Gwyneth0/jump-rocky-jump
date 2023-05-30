@@ -214,9 +214,6 @@
     "_noiseModule": {
       "__id__": 48
     },
-    "_trailModule": {
-      "__id__": 49
-    },
     "renderer": {
       "__id__": 54
     },
@@ -631,7 +628,6 @@
     "_octaveScale": 2
   },
   {
-    "__type__": "cc.TrailModule",
     "_enable": false,
     "mode": 0,
     "lifeTime": {
@@ -645,9 +641,6 @@
       "__id__": 51
     },
     "colorFromParticle": false,
-    "colorOverTrail": {
-      "__id__": 52
-    },
     "colorOvertime": {
       "__id__": 53
     },
@@ -723,7 +716,6 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "trail01",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -876,9 +868,6 @@
     },
     "_noiseModule": {
       "__id__": 104
-    },
-    "_trailModule": {
-      "__id__": 105
     },
     "renderer": {
       "__id__": 110
@@ -1300,7 +1289,6 @@
     "_octaveScale": 2
   },
   {
-    "__type__": "cc.TrailModule",
     "_enable": true,
     "mode": 0,
     "lifeTime": {
@@ -1312,10 +1300,6 @@
     "widthFromParticle": false,
     "widthRatio": {
       "__id__": 107
-    },
-    "colorFromParticle": false,
-    "colorOverTrail": {
-      "__id__": 108
     },
     "colorOvertime": {
       "__id__": 109

@@ -211,12 +211,7 @@
     "scoreAniPrefab": {
       "__uuid__": "1f858a4c-edcf-4051-b871-9d7c35137ead"
     },
-    "trail01Prefab": {
-      "__uuid__": "f64b6551-9ede-40a5-b41d-f3d3884af22f"
-    },
-    "trail02Prefab": {
-      "__uuid__": "519290e7-9d06-4212-9d54-e28a7c2a6b05"
-    },
+  
     "_id": "",
     "__prefab": {
       "__id__": 9
