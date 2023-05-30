@@ -52,7 +52,10 @@
       ],
       "subMetas": {},
       "userData": {
-        "gltfIndex": 0
+        "gltfIndex": 0,
+        "compressSettings": {
+          "useCompressTexture": true
+        }
       }
     },
     "5ad75": {

@@ -204,10 +204,6 @@
     "node": {
       "__id__": 1
     },
-    "_enabled": true,
-    "diamondParticlePrefab": {
-      "__uuid__": "b1fc9a91-ec8c-4c7a-9dc3-3f99f18c39fd"
-    },
     "scoreAniPrefab": {
       "__uuid__": "1f858a4c-edcf-4051-b871-9d7c35137ead"
     },
