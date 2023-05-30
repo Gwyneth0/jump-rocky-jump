@@ -7,7 +7,7 @@ export class PoolManager {
     private dictPool: { [name: string]: NodePool } = {}
     private dictPrefab: { [name: string]: Prefab } = {}
     static _instance: PoolManager;
-    static get instance () {
+    static get instance() {
         if (this._instance) {
             return this._instance;
         }
@@ -35,7 +35,7 @@ export class PoolManager {
         return node;
     }
 
-    public putNode (node: Node): void {
+    public putNode(node: Node): void {
         let name = node.name;
         let pool = null;
         if (this.dictPool.hasOwnProperty(name)) {
@@ -47,7 +47,7 @@ export class PoolManager {
         pool.put(node);
     }
 
-    public clearPool (name: string): void {
+    public clearPool(name: string): void {
         if (this.dictPool.hasOwnProperty(name)) {
             let pool = this.dictPool[name];
             pool.clear();

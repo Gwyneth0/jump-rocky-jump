@@ -9,7 +9,6 @@ const _tempPos = new Vec3();
 export class BoardManager extends Component {
     @property(Prefab)
     private boardPrefab: Prefab = null!;
-
     private _boardList: Board[] = [];
     private _boardInsIdx = 0;
 
@@ -28,7 +27,6 @@ export class BoardManager extends Component {
             board.reset(type, pos, 1);
             pos = this.getNextPos(board, 1);
         }
-
         board = this._boardList[0];
         board.isActive = true;
         Constants.game.ball.currBoard = board;

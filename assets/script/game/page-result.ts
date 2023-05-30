@@ -32,12 +32,12 @@ export class PageResult extends Component {
         this.init();
     }
 
-    public start():void{
+    public start(): void {
         const reviveComp = this.result.getComponent(Revive)!;
         reviveComp.pageResult = this;
     }
 
-    protected onDisable():void {
+    protected onDisable(): void {
         Constants.game.node.off(Constants.GAME_EVENT.HIDETIPS, this.hideTips, this);
         Constants.game.node.off(Constants.GAME_EVENT.ADDSCORE, this.addScore, this);
     }
@@ -48,21 +48,21 @@ export class PageResult extends Component {
         this.scoreLabel.playUpdateValue(curProgress, this.targetProgress, (this.targetProgress - curProgress) / 20);
     }
 
-    protected gameDie(): void{
+    protected gameDie(): void {
         this.showTips(false);
         this.showResult(true);
     }
 
-    protected showTips(show: boolean): void{
+    protected showTips(show: boolean): void {
         this.nodeTips1.active = show;
         this.nodeTips2.active = show;
     }
 
-    protected hideTips(): void{
+    protected hideTips(): void {
         this.showTips(false);
     }
 
-    public showResult(isShow: boolean): void{
+    public showResult(isShow: boolean): void {
         this.result.active = isShow;
     }
 }

@@ -4,7 +4,6 @@ import { Board } from "./board";
 import { utils } from "../utils/utils";
 import { PoolManager } from "../utils/pool-manager";
 const { ccclass, property } = _decorator;
-
 const _tempPos = new Vec3();
 
 @ccclass("Ball")
@@ -76,7 +75,7 @@ export class Ball extends Component {
                     const board = boardList[i];
                     const pos = this.node.position;
                     const boardPos = boardList[i].node.position;
-                    if (Math.abs(pos.x - boardPos.x) <= boardList[i].getRadius() && Math.abs(pos.y - (boardPos.y + Constants.BOARD_HEIGTH)) <= Constants.DIAMOND_SCORE_AREA) {
+                    if (Math.abs(pos.x - boardPos.x) <= boardList[i].getRadius() && Math.abs(pos.y - (boardPos.y + Constants.BOARD_HEIGTH))) {
                     }
                     if (this.jumpState === Constants.BALL_JUMP_STATE.FALLDOWN) {
                         if (this.currJumpFrame > Constants.PLAYER_MAX_DOWN_FRAMES || (this.currBoard.node.position.y - pos.y) - (Constants.BOARD_GAP + Constants.BOARD_HEIGTH) > 0.001) {
@@ -93,9 +92,7 @@ export class Ball extends Component {
                         }
                     }
                 }
-
                 this.currJumpFrame += this.timeScale;
-
                 if (this.jumpState === Constants.BALL_JUMP_STATE.JUMPUP) {
                     if (this.isJumpSpring && this.currJumpFrame >= Constants.BALL_JUMP_FRAMES_SPRING) {
                         this.jumpState = Constants.BALL_JUMP_STATE.FALLDOWN;

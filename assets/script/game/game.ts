@@ -20,8 +20,6 @@ export class Game extends Component {
     uiManager: UIManager = null!;
     @property(AudioManager)
     audioManager: AudioManager = null!;
-
-     // There is no diamond in first board
     private _initFirstBoard = false;
     public get initFirstBoard() {
         return this._initFirstBoard;
@@ -29,11 +27,9 @@ export class Game extends Component {
     public set initFirstBoard(value) {
         this._initFirstBoard = value;
     }
-
     get ball(){
         return this._ball;
     }
-
     state = Constants.GAME_STATE.READY;
     score = 0;
     hasRevive = false;

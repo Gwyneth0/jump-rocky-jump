@@ -28,7 +28,7 @@ export class Revive extends Component {
     @property({ type: Label })
     private progressLabel: Label = null;
     @property(SpriteComponent)
-    private spCountDown: SpriteComponent = null; 
+    private spCountDown: SpriteComponent = null;
     private _pageResult: PageResult = null;
     public get pageResult(): PageResult {
         return this._pageResult;
@@ -44,10 +44,10 @@ export class Revive extends Component {
         this.show();
     }
 
-    protected show():void {
+    protected show(): void {
         const score = Constants.game.score;
         this.scoreLabel.string = score.toString();
-        if (Constants.MAX_SCORE < score){
+        if (Constants.MAX_SCORE < score) {
             Constants.MAX_SCORE = score;
         }
         this.historyLabel.string = Constants.MAX_SCORE.toString();

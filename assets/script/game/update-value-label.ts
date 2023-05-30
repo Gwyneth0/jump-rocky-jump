@@ -25,6 +25,7 @@ export class UpdateValueLabel extends Label {
         this.string = startVal.toString();
         this.isPlaying = true;
     }
+
     protected update(dt: number): void {
         if (!this.isPlaying) {
             return;

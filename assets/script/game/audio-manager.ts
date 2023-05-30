@@ -2,7 +2,7 @@ import { _decorator, AudioClip, loader, Component, AudioSource } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("AudioManager")
-export class AudioManager extends Component{
+export class AudioManager extends Component {
     @property(AudioClip)
     private bg: AudioClip = null!;
     @property(AudioClip)
@@ -14,7 +14,7 @@ export class AudioManager extends Component{
     }
 
     public playSound(play = true): void {
-        if(!play){
+        if (!play) {
             this.audioComp.stop();
             return;
         }
@@ -25,5 +25,4 @@ export class AudioManager extends Component{
     public playClip(): void {
         this.audioComp.playOneShot(this.click);
     }
-
 }

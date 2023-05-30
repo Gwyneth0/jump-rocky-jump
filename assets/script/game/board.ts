@@ -3,7 +3,6 @@ import { Constants } from "../data/constants";
 import { Game } from "./game";
 import { utils } from '../utils/utils';
 const { ccclass, property } = _decorator;
-
 const _tempPos = new Vec3();
 
 @ccclass("Board")
@@ -11,16 +10,12 @@ export class Board extends Component {
 
     @property({ type: Prefab })
     private centerPrefab: Prefab = null!;
-
     @property({ type: Prefab })
     private wavePrefab: Prefab = null!;
-
     @property({ type: Prefab })
     private springTopPrefab: Prefab = null!;
-
     @property({ type: Prefab })
     private springHelixPrefab: Prefab = null!;
-
     private _isActive = false;
     public get isActive() {
         return this._isActive;
@@ -92,7 +87,6 @@ export class Board extends Component {
     public set currDropFrame(value) {
         this._currDropFrame = value;
     }
-
     private _game: Game = null!;
     public get game(): Game {
         return this._game;
@@ -178,6 +172,7 @@ export class Board extends Component {
     public setBump(): void {
         this.currBumpFrame = 0;
     }
+    
     private initCenter(): void {
         this.center = instantiate(this.centerPrefab);
         this.node.parent!.addChild(this.center);

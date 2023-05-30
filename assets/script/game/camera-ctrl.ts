@@ -26,7 +26,7 @@ export class CameraCtrl extends Component {
     public setOriginPosX(val: number): void {
         this._originPos.x = val;
     }
-
+    
     public setOriginPosY(val: number): void {
         this._originPos.y = val;
     }
