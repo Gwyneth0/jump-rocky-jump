@@ -8,13 +8,13 @@
       "__id__": 1
     },
     "optimizationPolicy": 0,
-    "asyncLoadAssets": false,
     "persistent": false
   },
   {
     "__type__": "cc.Node",
     "_name": "ball",
     "_objFlags": 0,
+    "__editorExtras__": {},
     "_parent": null,
     "_children": [
       {
@@ -24,11 +24,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 8
+        "__id__": 9
       }
     ],
     "_prefab": {
-      "__id__": 10
+      "__id__": 11
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -49,6 +49,7 @@
       "y": 1,
       "z": 1
     },
+    "_mobility": 0,
     "_layer": 1073741824,
     "_euler": {
       "__type__": "cc.Vec3",
@@ -73,7 +74,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 7
+      "__id__": 8
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -94,6 +95,7 @@
       "y": 1,
       "z": 1
     },
+    "_mobility": 0,
     "_layer": 1073741824,
     "_euler": {
       "__type__": "cc.Vec3",
@@ -118,7 +120,7 @@
       }
     ],
     "_prefab": {
-      "__id__": 6
+      "__id__": 7
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -139,6 +141,7 @@
       "y": 8.2357931137085,
       "z": 8.2357931137085
     },
+    "_mobility": 0,
     "_layer": 1073741824,
     "_euler": {
       "__type__": "cc.Vec3",
@@ -156,36 +159,55 @@
       "__id__": 3
     },
     "_enabled": true,
+    "__prefab": {
+      "__id__": 5
+    },
     "_materials": [
       {
-        "__uuid__": "71d93975-d01a-403a-916b-99e2101b6056"
+        "__uuid__": "71d93975-d01a-403a-916b-99e2101b6056",
+        "__expectedType__": "cc.Material"
       }
     ],
     "_visFlags": 0,
-    "_enableDynamicBatching": false,
+    "bakeSettings": {
+      "__id__": 6
+    },
     "_mesh": {
-      "__uuid__": "1f61dfda-8178-4d63-95f1-77c220eb0f7c@fb329"
+      "__uuid__": "1f61dfda-8178-4d63-95f1-77c220eb0f7c@fb329",
+      "__expectedType__": "cc.Mesh"
     },
     "_shadowCastingMode": 0,
-    "_receiveShadows": false,
-    "_id": "",
-    "__prefab": {
-      "__id__": 5
-    }
+    "_shadowReceivingMode": 1,
+    "_shadowBias": 0,
+    "_shadowNormalBias": 0,
+    "_reflectionProbeId": -1,
+    "_enableMorph": true,
+    "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "cak5OJXgJJ+5TtOIYl5JMX"
   },
   {
-    "__type__": "cc.PrefabInfo",
-    "root": {
-      "__id__": 1
+    "__type__": "cc.ModelBakeSettings",
+    "texture": null,
+    "uvParam": {
+      "__type__": "cc.Vec4",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
     },
-    "asset": {
-      "__id__": 0
-    },
-    "fileId": "Node.828"
+    "_bakeable": false,
+    "_castShadow": false,
+    "_receiveShadow": false,
+    "_recieveShadow": false,
+    "_lightmapSize": 64,
+    "_useLightProbe": false,
+    "_bakeToLightProbe": true,
+    "_reflectionProbeType": 0,
+    "_bakeToReflectionProbe": true,
+    "_probeCubemap": null
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -195,7 +217,23 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "Node.827"
+    "fileId": "Node.828",
+    "instance": null,
+    "targetOverrides": null,
+    "nestedPrefabInstanceRoots": null
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__id__": 0
+    },
+    "fileId": "Node.827",
+    "instance": null,
+    "targetOverrides": null,
+    "nestedPrefabInstanceRoots": null
   },
   {
     "__type__": "900c8pQ81tCcrbRdvi9SxTB",
@@ -204,14 +242,16 @@
     "node": {
       "__id__": 1
     },
-    "scoreAniPrefab": {
-      "__uuid__": "1f858a4c-edcf-4051-b871-9d7c35137ead"
-    },
-  
-    "_id": "",
+    "_enabled": true,
     "__prefab": {
-      "__id__": 9
-    }
+      "__id__": 10
+    },
+    "scoreAniPrefab": {
+      "__uuid__": "1f858a4c-edcf-4051-b871-9d7c35137ead",
+      "__expectedType__": "cc.Prefab"
+    },
+    "_currBoard": null,
+    "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
@@ -225,6 +265,8 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "Node.826"
+    "fileId": "Node.826",
+    "instance": null,
+    "targetOverrides": null
   }
 ]
